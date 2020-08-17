@@ -3,6 +3,7 @@ session_start();
 
 if(isset($_SESSION['userName'])){
 
+    $pageTitle = 'Dashboard';
     include "init.php";
     include $tpl."footer.php";
 

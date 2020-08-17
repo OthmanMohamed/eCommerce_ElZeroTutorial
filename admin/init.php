@@ -8,6 +8,7 @@
 	$js 	= 'layout/js/'; // Js Directory
 
 	//Include important files 
+	include $func."functions.php";
 	include $lang."en.php";
 	include 'connect.php';
 	include $tpl."header.php";

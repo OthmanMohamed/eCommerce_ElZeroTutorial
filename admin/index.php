@@ -2,6 +2,7 @@
     session_start();
 
     $noNavbar = ''; //Setting this variable to prevent including the navbar in the index page
+    $pageTitle = 'Login';
 
     if(isset($_SESSION['userName'])){
         header('Location: dashboard.php'); //Redirect to dashboard
@@ -16,13 +17,16 @@
         $hashedPass = sha1($password);
 
         //Check if user exists in database  
-        $stmt = $db->prepare("SELECT UserName, Password FROM users WHERE Username=? AND Password=? AND GroupID=1");
+        $stmt = $db->prepare("SELECT UserID, UserName, Password FROM users
+                             WHERE Username=? AND Password=? AND GroupID=1 LIMIT 1");
         $stmt->execute(array($username, $hashedPass));
+        $row = $stmt->fetch();
         $count = $stmt->rowCount();
 
         //if count>0 this means the user is found in database
         if($count>0){
             $_SESSION['userName'] = $username; //Register Session Name
+            $_SESSION['ID'] = $row['UserID']; //Register Session Name
             header('Location: dashboard.php'); //Redirect to dashboard
             exit();
         }
